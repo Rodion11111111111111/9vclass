@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Информационный портал 9 В класса" />
+    <title>Информационный портал 9 «В» класса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="На главную">9 «В»</a>
+      <button class="menu-button" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+      <nav class="navigation" aria-label="Главная навигация">
+        <a href="#home" data-page="home">Главная</a>
+        <a href="#schedule" data-page="schedule">Расписание</a>
+        <a href="#teachers" data-page="teachers">Звонки и учителя</a>
+        <a href="#books" data-page="books">Учебники</a>
+        <a href="#students" data-page="students">Ученики</a>
+        <a href="#contacts" data-page="contacts">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page active" id="home">
+        <div class="hero">
+          <p class="eyebrow">Информационный портал</p>
+          <h1>9 «В» класс</h1>
+          <p class="hero-copy">Всё важное для учеников, родителей и классного руководителя — в одном месте.</p>
+          <a class="primary-button" href="#schedule">Посмотреть расписание <span>→</span></a>
+        </div>
+        <section class="content-section events">
+          <div class="section-heading"><p class="eyebrow">Класс</p><h2>Предстоящие мероприятия</h2></div>
+          <article class="empty-card"><span class="empty-icon">🗓️</span><h3>Скоро появится</h3><p>Здесь будут новости класса, даты мероприятий и важные объявления.</p></article>
+        </section>
+      </section>
+
+      <section class="page" id="schedule">
+        <div class="page-title"><p class="eyebrow">Учебный процесс</p><h1>Расписание <span>🎯</span></h1><p>Уроки на неделю для 9 «В» класса.</p></div>
+        <section class="content-section">
+          <div class="notice-card"><strong>Расписание готово для заполнения</strong><p>На старом Google Sites таблица была отдельным встроенным блоком. Пришли её фотографию или ссылку на таблицу — и я перенесу уроки сюда без Google Sites.</p></div>
+          <div class="week-grid" id="schedule-grid"></div>
+        </section>
+      </section>
+
+      <section class="page" id="teachers">
+        <div class="page-title"><p class="eyebrow">Школа</p><h1>Звонки и учителя <span>🛎️</span></h1><p>Время уроков и контакты преподавателей.</p></div>
+        <section class="content-section split-layout">
+          <article class="info-panel"><h2>Звонки</h2><p class="muted">Таблица звонков в старой версии была вставлена отдельным Google-блоком. Здесь уже готово место для неё.</p><div class="bell-list"><div><b>1 урок</b><span>Время будет добавлено</span></div><div><b>2 урок</b><span>Время будет добавлено</span></div><div><b>3 урок</b><span>Время будет добавлено</span></div></div></article>
+          <article class="info-panel"><h2>Учителя</h2><p class="muted">Добавь сюда список преподавателей, когда он будет под рукой.</p><div class="teacher-placeholder">👩‍🏫<br /><span>Список учителей</span></div></article>
+        </section>
+      </section>
+
+      <section class="page" id="books">
+        <div class="page-title"><p class="eyebrow">Учеба</p><h1>Учебники <span>📚</span></h1><p>Материалы по школьным предметам.</p></div>
+        <section class="content-section book-grid">
+          <article class="category-card"><span>🔬</span><h2>Естественно-математические предметы</h2><p>Математика, физика, химия, биология, информатика и география.</p></article>
+          <article class="category-card"><span>📖</span><h2>Гуманитарные предметы</h2><p>Русский язык, литература, история, языки и другие предметы.</p></article>
+        </section>
+      </section>
+
+      <section class="page" id="students">
+        <div class="page-title"><p class="eyebrow">Наш класс</p><h1>Список учеников <span>🎓</span></h1><p>9 «В» класс.</p></div>
+        <section class="content-section"><div class="student-grid" id="student-grid"></div></section>
+      </section>
+
+      <section class="page" id="contacts">
+        <div class="page-title"><p class="eyebrow">Связь</p><h1>Контакты <span>📢</span></h1><p>К кому обратиться по вопросам класса.</p></div>
+        <section class="content-section contact-list">
+          <article class="contact-card"><span class="contact-avatar">👩🏻‍🏫</span><div><h2>Угульбай Гульназ Нуралиевна</h2><p>Классный руководитель</p><a href="tel:+77059131161">+7 705 913 1161</a></div></article>
+          <article class="contact-card"><span class="contact-avatar">👨‍🎓</span><div><h2>Смирнов Артём Павлович</h2><p>Староста класса</p><a href="tel:+77780428007">+7 778 042 8007</a></div></article>
+          <article class="contact-card"><span class="contact-avatar">🏫</span><div><h2>Абдульманова Бикон Амангельдиновна</h2><p>Школьная администрация</p><a href="tel:+77778943624">+7 777 894 3624</a></div></article>
+          <article class="address-card"><span>📍</span><div><h2>Адрес школы</h2><p>г. Астана, ул. Сакена Сейфуллина, 19</p></div></article>
+        </section>
+      </section>
+    </main>
+
+    <footer>© 2026 Информационный портал 9 «В» класса · Ғафу Қайырбеков атындағы № 2 мектеп-гимназия · Версия сайта v1.0</footer>
+    <script src="app.js"></script>
+  </body>
+</html>

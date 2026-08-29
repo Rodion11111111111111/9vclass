@@ -17,6 +17,11 @@ class handler(BaseHTTPRequestHandler):
    reply(self,200,{'schedule':json.loads(row[0]) if row else {}})
   except Exception: reply(self,500,{'error':'Database is not configured'})
  def do_POST(self):
+  if self.path=='/api/site-access':
+   try: data=self.read()
+   except Exception: return reply(self,400,{'error':'Invalid request'})
+   if hmac.compare_digest(str(data.get('password','')),os.environ.get('SITE_PASSWORD','')): return reply(self,200,{'ok':True})
+   return reply(self,401,{'error':'Неверный пароль.'})
   if self.path!='/api/login': return reply(self,404,{'error':'Not found'})
   try: data=self.read()
   except Exception: return reply(self,400,{'error':'Invalid request'})

@@ -16,8 +16,10 @@
     <link rel="stylesheet" href="teachers-table.css" />
     <link rel="stylesheet" href="welcome.css?v=2" />
     <link rel="stylesheet" href="bilimclass.css" />
+    <link rel="stylesheet" href="gate.css" />
   </head>
   <body>
+    <section class="site-gate" id="site-gate"><form id="site-gate-form"><h1>Вход на сайт</h1><p>Введите пароль для просмотра.</p><input id="site-password" type="password" placeholder="Пароль" required><button>Войти</button><p id="site-gate-status"></p></form></section>
     <section id="welcomePopup" class="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
       <div class="welcome-box">
         <div class="welcome-icon" aria-hidden="true">👋</div>
@@ -132,5 +134,6 @@
     <script src="app.js?v=6"></script>
     <script src="auth.js?v=5"></script>
     <script src="welcome.js?v=3"></script>
+    <script src="gate.js"></script>
   </body>
 </html>

@@ -11,6 +11,11 @@ const scheduleGrid = document.querySelector('#schedule-grid');
 const blankEntries = () => Array.from({ length: 8 }, () => ({ subject: '', time: '', room: '' }));
 const escapeHtml = value => String(value || '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
 let saveTimeout;
+const scheduleStorageKey = '9vclass-schedule';
+
+function localSchedule() {
+  try { return JSON.parse(localStorage.getItem(scheduleStorageKey) || '{}'); } catch { return {}; }
+}
 
 function renderSchedule(savedSchedule = {}) {
   scheduleGrid.innerHTML = days.map(day => {
@@ -27,14 +32,22 @@ function collectSchedule() {
 }
 
 async function loadSchedule() {
-  try { renderSchedule((await (await fetch('/api/schedule')).json()).schedule); } catch { renderSchedule(); }
+  try {
+    const response = await fetch('/api/schedule');
+    if (!response.ok) throw new Error('schedule unavailable');
+    const schedule = (await response.json()).schedule;
+    localStorage.setItem(scheduleStorageKey, JSON.stringify(schedule));
+    renderSchedule(schedule);
+  } catch { renderSchedule(localSchedule()); }
 }
 
 scheduleGrid.addEventListener('input', () => {
   if (document.body.dataset.accessMode !== 'admin') return;
+  const schedule = collectSchedule();
+  localStorage.setItem(scheduleStorageKey, JSON.stringify(schedule));
   clearTimeout(saveTimeout);
   saveTimeout = setTimeout(async () => {
-    await fetch('/api/schedule', { method: 'PUT', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` }, body: JSON.stringify({ schedule: collectSchedule() }) });
+    try { await fetch('/api/schedule', { method: 'PUT', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` }, body: JSON.stringify({ schedule }) }); } catch {}
   }, 500);
 });
 

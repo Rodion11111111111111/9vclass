@@ -1,0 +1,26 @@
+.welcome-overlay {
+  position: fixed;
+  z-index: 30;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(30, 150, 200, 0.25);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: welcome-fade-in 0.4s ease;
+}
+
+.welcome-overlay[hidden] { display: none; }
+.welcome-overlay.is-closing { opacity: 0; transition: opacity 0.25s ease; }
+.welcome-box { width: min(100%, 400px); padding: 35px 30px; text-align: center; background: linear-gradient(145deg, #dff7ff, #b8ebff); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 24px; box-shadow: 0 20px 50px rgba(0, 130, 180, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.8); animation: welcome-popup 0.45s ease; }
+.welcome-icon { margin-bottom: 10px; font-size: 48px; }
+.welcome-box h2 { margin: 0 0 10px; color: #087ea4; font: 700 28px Comfortaa, sans-serif; }
+.welcome-box p { margin: 0 0 25px; color: #34758b; }
+.welcome-box .welcome-datetime { margin: -12px 0 25px; color: #087ea4; font-weight: 700; }
+.welcome-box button { padding: 12px 40px; color: #fff; background: linear-gradient(135deg, #4fc3f7, #169bd5); border: 0; border-radius: 14px; box-shadow: 0 7px 18px rgba(0, 150, 210, 0.3); font: 600 16px Manrope, sans-serif; cursor: pointer; transition: 0.2s ease; }
+.welcome-box button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(0, 150, 210, 0.4); }
+.welcome-box button:active { transform: scale(0.96); }
+@keyframes welcome-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes welcome-popup { from { opacity: 0; transform: scale(0.85) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }

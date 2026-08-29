@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Информационный портал 9 В класса" />
+    <title>Информационный портал 9 «В» класса</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="poster.css" />
+    <link rel="stylesheet" href="schedule-editor.css?v=9" />
+    <link rel="stylesheet" href="auth.css?v=4" />
+    <link rel="stylesheet" href="math-background.css?v=2" />
+    <link rel="stylesheet" href="teachers-table.css" />
+    <link rel="stylesheet" href="welcome.css?v=2" />
+    <link rel="stylesheet" href="bilimclass.css" />
+  </head>
+  <body>
+    <section id="welcomePopup" class="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <div class="welcome-box">
+        <div class="welcome-icon" aria-hidden="true">👋</div>
+        <h2 id="welcome-title">Добро пожаловать!</h2>
+        <p>Рады видеть вас на нашем сайте 💙</p>
+        <p class="welcome-datetime" id="welcomeDatetime"></p>
+        <button id="closeWelcome" type="button">OK</button>
+      </div>
+    </section>
+    <section class="auth-overlay" aria-labelledby="auth-title" hidden>
+      <form class="auth-card" id="auth-form">
+        <h1 id="auth-title">Вход администратора</h1>
+        <p id="auth-description">Введите данные администратора.</p>
+        <label for="auth-login">Логин</label>
+        <input id="auth-login" name="login" autocomplete="username" />
+        <label id="auth-password-label" for="auth-password">Пароль администратора</label>
+        <input id="auth-password" name="password" type="password" autocomplete="current-password" />
+        <button class="auth-submit" id="auth-submit" type="submit">Войти как админ</button>
+        <p class="auth-status" id="auth-status" aria-live="polite"></p>
+      </form>
+    </section>
+    <button class="admin-login-button" id="admin-login-button" type="button">Войти как админ</button>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="На главную">9 «В»</a>
+      <button class="menu-button" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
+      <nav class="navigation" aria-label="Главная навигация">
+        <a href="#home" data-page="home">Главная</a>
+        <a href="#schedule" data-page="schedule">Расписание</a>
+        <a href="#teachers" data-page="teachers">Звонки и учителя</a>
+        <a href="#books" data-page="books">Учебники</a>
+        <a href="#students" data-page="students">Ученики</a>
+        <a href="#contacts" data-page="contacts">Контакты</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page active" id="home">
+        <div class="hero">
+          <p class="eyebrow">Информационный портал</p>
+          <h1>9 «В» класс</h1>
+          <p class="hero-copy">Всё важное для учеников, родителей и классного руководителя — в одном месте.</p>
+          <a class="primary-button" href="#schedule">Посмотреть расписание <span>→</span></a>
+        </div>
+        <section class="content-section events">
+          <div class="section-heading"><p class="eyebrow">Класс</p><h2>Предстоящие мероприятия</h2></div>
+          <article class="empty-card"><span class="empty-icon">🗓️</span><h3>Скоро появится</h3><p>Здесь будут новости класса, даты мероприятий и важные объявления.</p></article>
+          <div class="site-links">
+            <a class="bilimclass-link" href="https://www.bilimclass.kz/login" target="_blank" rel="noopener noreferrer" aria-label="Билимкласс"><img src="bilimclass-logo.png" alt="Билимкласс" /></a>
+            <a class="bilimclass-link" href="https://2schoolastana.edu.kz/ru/" target="_blank" rel="noopener noreferrer" aria-label="Сайт школы"><img src="school-logo.png" alt="Сайт школы" /></a>
+          </div>
+        </section>
+      </section>
+
+      <section class="page" id="schedule">
+        <div class="page-title"><p class="eyebrow">Учебный процесс</p><h1>Расписание <span>🎯</span></h1><p>Уроки на неделю для 9 «В» класса.</p></div>
+        <section class="content-section">
+          <div class="schedule-editor-grid" id="schedule-grid"></div>
+        </section>
+      </section>
+
+      <section class="page" id="teachers">
+        <div class="page-title"><p class="eyebrow">Школа</p><h1>Звонки и учителя <span>🛎️</span></h1><p>Время уроков и контакты преподавателей.</p></div>
+        <section class="content-section">
+          <figure class="bells-poster">
+            <img src="bells-only.png" alt="Расписание звонков 9 «В» класса" />
+          </figure>
+        </section>
+        <section class="content-section">
+          <div class="teachers-subjects" aria-label="Учителя и предметы">
+            <div class="teachers-subjects-header"><span>Учитель</span><span>Предмет</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page" id="books">
+        <div class="page-title"><p class="eyebrow">Учеба</p><h1>Учебники <span>📚</span></h1><p>Материалы по школьным предметам.</p></div>
+        <section class="content-section book-grid">
+          <article class="category-card"><span>🔬</span><h2>Естественно-математические предметы</h2><p>Математика, физика, химия, биология, информатика и география.</p></article>
+          <article class="category-card"><span>📖</span><h2>Гуманитарные предметы</h2><p>Русский язык, литература, история, языки и другие предметы.</p></article>
+        </section>
+      </section>
+
+      <section class="page" id="students">
+        <div class="page-title"><p class="eyebrow">Наш класс</p><h1>Список учеников <span>🎓</span></h1><p>9 «В» класс.</p></div>
+        <section class="content-section"><div class="student-grid" id="student-grid"></div></section>
+      </section>
+
+      <section class="page" id="contacts">
+        <div class="page-title"><p class="eyebrow">Связь</p><h1>Контакты <span>📢</span></h1><p>К кому обратиться по вопросам класса.</p></div>
+        <section class="content-section contact-list">
+          <article class="contact-card"><span class="contact-avatar">👩🏻‍🏫</span><div><h2>Угульбай Гульназ Нуралиевна</h2><p>Классный руководитель</p><a href="tel:+77059131161">+7 705 913 1161</a></div></article>
+          <article class="contact-card"><span class="contact-avatar">👨‍🎓</span><div><h2>Смирнов Артём Павлович</h2><p>Староста класса</p><a href="tel:+77780428007">+7 778 042 8007</a></div></article>
+          <article class="contact-card"><span class="contact-avatar">🏫</span><div><h2>Абдульманова Бикон Амангельдиновна</h2><p>Школьная администрация</p><a href="tel:+77778943624">+7 777 894 3624</a></div></article>
+          <article class="address-card"><span>📍</span><div><h2>Адрес школы</h2><p>г. Астана, ул. Сакена Сейфуллина, 19</p></div></article>
+        </section>
+      </section>
+    </main>
+
+    <footer>© 2026 Информационный портал 9 «В» класса · Ғафу Қайырбеков атындағы № 2 мектеп-гимназия · Версия сайта v1.0</footer>
+    <script src="app.js?v=6"></script>
+    <script src="auth.js?v=5"></script>
+    <script src="welcome.js?v=3"></script>
+  </body>
+</html>

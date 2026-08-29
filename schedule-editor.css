@@ -1,0 +1,73 @@
+.schedule-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(210px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+#schedule .content-section { padding-top: 0; }
+#schedule .page-title { padding-bottom: 0; }
+
+.schedule-day-card {
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #dbeaf4;
+  border-radius: 18px;
+}
+
+.schedule-day-card h2 {
+  margin: 0 0 14px;
+  color: #087cb7;
+  font: 700 18px/1.3 Comfortaa, sans-serif;
+}
+
+.schedule-entry {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 0 8px;
+  margin-top: 8px;
+  align-items: center;
+  padding: 6px 8px;
+  border: 1px solid #c7e1f0;
+  border-radius: 10px;
+}
+
+.schedule-entry-number {
+  display: grid;
+  place-items: center;
+  color: #087cb7;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 1.15;
+  text-align: center;
+  grid-row: 1 / span 3;
+}
+
+.schedule-entry input {
+  width: 100%;
+  min-width: 0;
+  padding: 4px 2px;
+  color: #15283a;
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+}
+
+.schedule-entry input + input { border-top: 1px solid #dbeaf4; }
+.schedule-entry input[data-field="time"] { font-weight: 400; }
+.schedule-entry input[data-field="room"] { font-weight: 400; }
+
+.schedule-entry input:focus {
+  background: #eefaff;
+}
+
+@media (max-width: 980px) {
+  .schedule-editor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .schedule-editor-grid { grid-template-columns: 1fr; }
+  .schedule-entry { grid-template-columns: 62px minmax(0, 1fr); }
+}

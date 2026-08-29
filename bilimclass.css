@@ -1,0 +1,24 @@
+.site-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.bilimclass-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  padding: 8px;
+  color: #fff;
+  background: #087cb7;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(8, 124, 183, 0.25);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.bilimclass-link:hover { background: #056d9f; }
+.bilimclass-link img { display: block; width: 44px; height: 44px; object-fit: contain; border-radius: 8px; }

@@ -9,8 +9,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="poster.css" />
+    <link rel="stylesheet" href="schedule-editor.css?v=9" />
+    <link rel="stylesheet" href="auth.css?v=4" />
+    <link rel="stylesheet" href="math-background.css?v=2" />
+    <link rel="stylesheet" href="teachers-table.css" />
+    <link rel="stylesheet" href="welcome.css?v=2" />
+    <link rel="stylesheet" href="bilimclass.css" />
   </head>
   <body>
+    <section id="welcomePopup" class="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
+      <div class="welcome-box">
+        <div class="welcome-icon" aria-hidden="true">👋</div>
+        <h2 id="welcome-title">Добро пожаловать!</h2>
+        <p>Рады видеть вас на нашем сайте 💙</p>
+        <p class="welcome-datetime" id="welcomeDatetime"></p>
+        <button id="closeWelcome" type="button">OK</button>
+      </div>
+    </section>
+    <section class="auth-overlay" aria-labelledby="auth-title" hidden>
+      <form class="auth-card" id="auth-form">
+        <h1 id="auth-title">Вход администратора</h1>
+        <p id="auth-description">Введите данные администратора.</p>
+        <label for="auth-login">Логин</label>
+        <input id="auth-login" name="login" autocomplete="username" />
+        <label id="auth-password-label" for="auth-password">Пароль администратора</label>
+        <input id="auth-password" name="password" type="password" autocomplete="current-password" />
+        <button class="auth-submit" id="auth-submit" type="submit">Войти как админ</button>
+        <p class="auth-status" id="auth-status" aria-live="polite"></p>
+      </form>
+    </section>
+    <button class="admin-login-button" id="admin-login-button" type="button">Войти как админ</button>
     <header class="site-header">
       <a class="brand" href="#home" aria-label="На главную">9 «В»</a>
       <button class="menu-button" type="button" aria-label="Открыть меню" aria-expanded="false">☰</button>
@@ -35,22 +64,43 @@
         <section class="content-section events">
           <div class="section-heading"><p class="eyebrow">Класс</p><h2>Предстоящие мероприятия</h2></div>
           <article class="empty-card"><span class="empty-icon">🗓️</span><h3>Скоро появится</h3><p>Здесь будут новости класса, даты мероприятий и важные объявления.</p></article>
+          <div class="site-links">
+            <a class="bilimclass-link" href="https://www.bilimclass.kz/login" target="_blank" rel="noopener noreferrer" aria-label="Билимкласс"><img src="bilimclass-logo.png" alt="Билимкласс" /></a>
+            <a class="bilimclass-link" href="https://2schoolastana.edu.kz/ru/" target="_blank" rel="noopener noreferrer" aria-label="Сайт школы"><img src="school-logo.png" alt="Сайт школы" /></a>
+          </div>
         </section>
       </section>
 
       <section class="page" id="schedule">
         <div class="page-title"><p class="eyebrow">Учебный процесс</p><h1>Расписание <span>🎯</span></h1><p>Уроки на неделю для 9 «В» класса.</p></div>
         <section class="content-section">
-          <div class="notice-card"><strong>Расписание готово для заполнения</strong><p>На старом Google Sites таблица была отдельным встроенным блоком. Пришли её фотографию или ссылку на таблицу — и я перенесу уроки сюда без Google Sites.</p></div>
-          <div class="week-grid" id="schedule-grid"></div>
+          <div class="schedule-editor-grid" id="schedule-grid"></div>
         </section>
       </section>
 
       <section class="page" id="teachers">
         <div class="page-title"><p class="eyebrow">Школа</p><h1>Звонки и учителя <span>🛎️</span></h1><p>Время уроков и контакты преподавателей.</p></div>
-        <section class="content-section split-layout">
-          <article class="info-panel"><h2>Звонки</h2><p class="muted">Таблица звонков в старой версии была вставлена отдельным Google-блоком. Здесь уже готово место для неё.</p><div class="bell-list"><div><b>1 урок</b><span>Время будет добавлено</span></div><div><b>2 урок</b><span>Время будет добавлено</span></div><div><b>3 урок</b><span>Время будет добавлено</span></div></div></article>
-          <article class="info-panel"><h2>Учителя</h2><p class="muted">Добавь сюда список преподавателей, когда он будет под рукой.</p><div class="teacher-placeholder">👩‍🏫<br /><span>Список учителей</span></div></article>
+        <section class="content-section">
+          <figure class="bells-poster">
+            <img src="bells-only.png" alt="Расписание звонков 9 «В» класса" />
+          </figure>
+        </section>
+        <section class="content-section">
+          <div class="teachers-subjects" aria-label="Учителя и предметы">
+            <div class="teachers-subjects-header"><span>Учитель</span><span>Предмет</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+            <div class="teachers-subjects-row"><span>—</span><span>—</span></div>
+          </div>
         </section>
       </section>
 
@@ -79,6 +129,8 @@
     </main>
 
     <footer>© 2026 Информационный портал 9 «В» класса · Ғафу Қайырбеков атындағы № 2 мектеп-гимназия · Версия сайта v1.0</footer>
-    <script src="app.js"></script>
+    <script src="app.js?v=6"></script>
+    <script src="auth.js?v=5"></script>
+    <script src="welcome.js?v=3"></script>
   </body>
 </html>

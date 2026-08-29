@@ -1,0 +1,9 @@
+body {
+  background:
+    linear-gradient(rgba(246, 251, 255, 0.38), rgba(246, 251, 255, 0.38)),
+    url("math-background.png") center / cover fixed;
+}
+
+@media (max-width: 760px) {
+  body { background-attachment: scroll; }
+}

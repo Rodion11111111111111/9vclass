@@ -1,0 +1,12 @@
+.bells-poster {
+  width: min(100%, 920px);
+  margin: 0 auto;
+}
+
+.bells-poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  box-shadow: 0 16px 50px rgba(10, 67, 102, 0.12);
+}

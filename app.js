@@ -1,12 +1,44 @@
 const students = [
   ['Абенова Аруна', 'Ученица'], ['Абылкасым Нурасыл', 'Ученик'], ['Айтимов Алдияр', 'Ученик'], ['Айтимов Алияр', 'Ученик'], ['Аширов Хангельды', 'Ученик'], ['Барков Марк', 'Ученик'], ['Демкина Мария', 'Ученица'], ['Ещанова Аружан', 'Ученица'], ['Зеленкин Денис', 'Ученик'], ['Какенова Тамирис', 'Ученица'], ['Ковалдин Дмитрий', 'Ученик'], ['Комратова Яна', 'Ученица'], ['Обозный Владислав', 'Ученик'], ['Оганесян Никита', 'Ученик'], ['Палинка Александр', 'Ученик'], ['Пристенная Екатерина', 'Ученица'], ['Сидиков Марсель', 'Ученик'], ['Смирнов Артём', 'Староста класса'], ['Сушко Надежда', 'Ученица'], ['Тагабергенова Томирис', 'Ученица'], ['Чернышов Родион', 'Заместитель старосты']
 ];
-const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
 document.querySelector('#student-grid').innerHTML = students.map(([name, role]) => {
   const initials = name.split(' ').map(part => part[0]).join('').slice(0, 2);
   return `<article class="student"><span class="initials">${initials}</span><div><b>${name}</b><small>${role}</small></div></article>`;
 }).join('');
-document.querySelector('#schedule-grid').innerHTML = days.map(day => `<article class="day-card"><h3>${day}</h3><p>Предметы будут добавлены после переноса таблицы расписания.</p></article>`).join('');
+
+const days = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница'];
+const scheduleGrid = document.querySelector('#schedule-grid');
+const blankEntries = () => Array.from({ length: 8 }, () => ({ subject: '', time: '', room: '' }));
+const escapeHtml = value => String(value || '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+let saveTimeout;
+
+function renderSchedule(savedSchedule = {}) {
+  scheduleGrid.innerHTML = days.map(day => {
+    const entries = savedSchedule[day] || blankEntries();
+    return `<article class="schedule-day-card"><h2>${day}</h2>${entries.map((entry, index) => `<div class="schedule-entry"><strong class="schedule-entry-number">${index + 1} урок</strong><input data-day="${day}" data-field="subject" data-index="${index}" value="${escapeHtml(entry.subject)}" placeholder="Предмет" aria-label="${day}, ${index + 1} урок, предмет"><input data-day="${day}" data-field="time" data-index="${index}" value="${escapeHtml(entry.time)}" placeholder="Время" aria-label="${day}, ${index + 1} урок, время"><input data-day="${day}" data-field="room" data-index="${index}" value="${escapeHtml(entry.room)}" placeholder="Кабинет" aria-label="${day}, ${index + 1} урок, кабинет"></div>`).join('')}</article>`;
+  }).join('');
+  document.querySelectorAll('.schedule-entry input').forEach(input => { input.readOnly = document.body.dataset.accessMode !== 'admin'; });
+}
+
+function collectSchedule() {
+  const schedule = {};
+  days.forEach(day => { schedule[day] = Array.from(scheduleGrid.querySelectorAll(`[data-day="${day}"][data-field="subject"]`)).map((subject, index) => ({ subject: subject.value, time: scheduleGrid.querySelector(`[data-day="${day}"][data-field="time"][data-index="${index}"]`).value, room: scheduleGrid.querySelector(`[data-day="${day}"][data-field="room"][data-index="${index}"]`).value })); });
+  return schedule;
+}
+
+async function loadSchedule() {
+  try { renderSchedule((await (await fetch('/api/schedule')).json()).schedule); } catch { renderSchedule(); }
+}
+
+scheduleGrid.addEventListener('input', () => {
+  if (document.body.dataset.accessMode !== 'admin') return;
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async () => {
+    await fetch('/api/schedule', { method: 'PUT', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` }, body: JSON.stringify({ schedule: collectSchedule() }) });
+  }, 500);
+});
+
+loadSchedule();
 
 const pages = [...document.querySelectorAll('.page')];
 const links = [...document.querySelectorAll('[data-page]')];

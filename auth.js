@@ -6,6 +6,7 @@ const authSubmit = document.querySelector('#auth-submit');
 const authStatus = document.querySelector('#auth-status');
 const adminLoginButton = document.querySelector('#admin-login-button');
 let adminToken = '';
+let teachersSaveTimeout;
 const teachersStorageKey = '9vclass-teachers';
 
 function restoreTeachers() {
@@ -16,7 +17,21 @@ function restoreTeachers() {
 }
 
 function saveTeachers() {
-  localStorage.setItem(teachersStorageKey, JSON.stringify(Array.from(document.querySelectorAll('[data-teacher-field]'), input => input.value)));
+  const teachers = Array.from(document.querySelectorAll('[data-teacher-field]'), input => input.value);
+  localStorage.setItem(teachersStorageKey, JSON.stringify(teachers));
+  clearTimeout(teachersSaveTimeout);
+  teachersSaveTimeout = setTimeout(() => fetch('/api/teachers', { method: 'PUT', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` }, body: JSON.stringify({ teachers }) }).catch(() => {}), 500);
+}
+
+async function loadTeachers() {
+  try {
+    const response = await fetch('/api/teachers');
+    if (!response.ok) return;
+    const teachers = (await response.json()).teachers;
+    if (!Array.isArray(teachers) || !teachers.some(Boolean)) return;
+    document.querySelectorAll('[data-teacher-field]').forEach((input, index) => { input.value = teachers[index] || ''; });
+    localStorage.setItem(teachersStorageKey, JSON.stringify(teachers));
+  } catch {}
 }
 
 function setScheduleEditing(enabled) {
@@ -33,6 +48,7 @@ function setTeachersEditing(enabled) {
 setScheduleEditing(false);
 setTeachersEditing(false);
 restoreTeachers();
+loadTeachers();
 document.body.dataset.accessMode = 'visitor';
 
 document.querySelectorAll('[data-teacher-field]').forEach(input => input.addEventListener('input', () => {

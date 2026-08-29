@@ -10,7 +10,7 @@ def setup(c): c.execute('CREATE TABLE IF NOT EXISTS portal_settings (key TEXT PR
 def valid(h):
  token=h.headers.get('Authorization','').removeprefix('Bearer ')
  try:
-  expires,signature=token.split('.',1); expected=hmac.new(os.environ.get('ADMIN_PASSWORD','').encode(),expires.encode(),hashlib.sha256).hexdigest()
+  expires,signature=token.split(':',1); expected=hmac.new(os.environ.get('ADMIN_PASSWORD','').encode(),expires.encode(),hashlib.sha256).hexdigest()
   return float(expires)>time.time() and hmac.compare_digest(signature,expected)
  except Exception: return False
 class handler(BaseHTTPRequestHandler):
@@ -32,7 +32,7 @@ class handler(BaseHTTPRequestHandler):
   try: data=self.read()
   except Exception: return reply(self,400,{'error':'Invalid request'})
   if not hmac.compare_digest(str(data.get('login','')),os.environ.get('ADMIN_LOGIN','')) or not hmac.compare_digest(str(data.get('password','')),os.environ.get('ADMIN_PASSWORD','')): return reply(self,401,{'error':'Неверный логин или пароль.'})
-  expires=str(time.time()+TTL); token=expires+'.'+hmac.new(os.environ.get('ADMIN_PASSWORD','').encode(),expires.encode(),hashlib.sha256).hexdigest(); reply(self,200,{'token':token})
+  expires=str(time.time()+TTL); token=expires+':'+hmac.new(os.environ.get('ADMIN_PASSWORD','').encode(),expires.encode(),hashlib.sha256).hexdigest(); reply(self,200,{'token':token})
  def do_PUT(self):
   if self.path not in ['/api/schedule','/api/teachers']: return reply(self,404,{'error':'Not found'})
   if not valid(self): return reply(self,401,{'error':'Требуется вход администратора.'})

@@ -14,7 +14,12 @@ function setScheduleEditing(enabled) {
   });
 }
 
+function setTeachersEditing(enabled) {
+  document.querySelectorAll('[data-teacher-field]').forEach(input => { input.readOnly = !enabled; });
+}
+
 setScheduleEditing(false);
+setTeachersEditing(false);
 document.body.dataset.accessMode = 'visitor';
 
 adminLoginButton.addEventListener('click', () => {
@@ -38,4 +43,5 @@ document.querySelector('#auth-form').addEventListener('submit', async event => {
   authOverlay.hidden = true;
   document.body.dataset.accessMode = 'admin';
   setScheduleEditing(true);
+  setTeachersEditing(true);
 });

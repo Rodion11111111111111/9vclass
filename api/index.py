@@ -1,13 +1,18 @@
-import hmac, json, os, secrets, time
+import hashlib, hmac, json, os, time
 from http.server import BaseHTTPRequestHandler
 import psycopg
 
-SESSIONS, TTL = {}, 43200
+TTL = 43200
 def reply(h, status, payload):
     body=json.dumps(payload,ensure_ascii=False).encode(); h.send_response(status); h.send_header('Content-Type','application/json; charset=utf-8'); h.send_header('Content-Length',str(len(body))); h.end_headers(); h.wfile.write(body)
 def db(): return psycopg.connect(os.environ.get('DATABASE_URL') or os.environ.get('STORAGE_URL') or os.environ['DOTABASE_DATABASE_URL'])
 def setup(c): c.execute('CREATE TABLE IF NOT EXISTS portal_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
-def valid(h): return SESSIONS.get(h.headers.get('Authorization','').removeprefix('Bearer '),0)>time.time()
+def valid(h):
+ token=h.headers.get('Authorization','').removeprefix('Bearer ')
+ try:
+  expires,signature=token.split('.',1); expected=hmac.new(os.environ.get('ADMIN_PASSWORD','').encode(),expires.encode(),hashlib.sha256).hexdigest()
+  return float(expires)>time.time() and hmac.compare_digest(signature,expected)
+ except Exception: return False
 class handler(BaseHTTPRequestHandler):
  def read(self): return json.loads(self.rfile.read(int(self.headers.get('Content-Length',0)) or 0))
  def do_GET(self):
@@ -27,7 +32,7 @@ class handler(BaseHTTPRequestHandler):
   try: data=self.read()
   except Exception: return reply(self,400,{'error':'Invalid request'})
   if not hmac.compare_digest(str(data.get('login','')),os.environ.get('ADMIN_LOGIN','')) or not hmac.compare_digest(str(data.get('password','')),os.environ.get('ADMIN_PASSWORD','')): return reply(self,401,{'error':'Неверный логин или пароль.'})
-  token=secrets.token_urlsafe(32); SESSIONS[token]=time.time()+TTL; reply(self,200,{'token':token})
+  expires=str(time.time()+TTL); token=expires+'.'+hmac.new(os.environ.get('ADMIN_PASSWORD','').encode(),expires.encode(),hashlib.sha256).hexdigest(); reply(self,200,{'token':token})
  def do_PUT(self):
   if self.path not in ['/api/schedule','/api/teachers']: return reply(self,404,{'error':'Not found'})
   if not valid(self): return reply(self,401,{'error':'Требуется вход администратора.'})

@@ -33,7 +33,7 @@
 .teachers-subjects-row input::placeholder { font-weight: 800; }
 .teachers-subjects-row input + input { border-left: 1px solid #dbeaf4; }
 .teachers-subjects-row input:focus { outline: 2px solid #62b9e9; outline-offset: -2px; background: #f6fcff; }
-.teachers-subjects-row input:read-only { color: #6d8293; cursor: default; }
+.teachers-subjects-row input:read-only { color: #18364b; cursor: default; opacity: 1; }
 
 @media (max-width: 560px) {
   .teachers-subjects-header { font-size: 14px; }

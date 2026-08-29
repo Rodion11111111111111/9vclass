@@ -5,7 +5,7 @@ import psycopg
 SESSIONS, TTL = {}, 43200
 def reply(h, status, payload):
     body=json.dumps(payload,ensure_ascii=False).encode(); h.send_response(status); h.send_header('Content-Type','application/json; charset=utf-8'); h.send_header('Content-Length',str(len(body))); h.end_headers(); h.wfile.write(body)
-def db(): return psycopg.connect(os.environ['DATABASE_URL'])
+def db(): return psycopg.connect(os.environ.get('DATABASE_URL') or os.environ['STORAGE_URL'])
 def setup(c): c.execute('CREATE TABLE IF NOT EXISTS portal_settings (key TEXT PRIMARY KEY, value TEXT NOT NULL)')
 def valid(h): return SESSIONS.get(h.headers.get('Authorization','').removeprefix('Bearer '),0)>time.time()
 class handler(BaseHTTPRequestHandler):

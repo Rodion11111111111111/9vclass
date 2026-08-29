@@ -6,6 +6,18 @@ const authSubmit = document.querySelector('#auth-submit');
 const authStatus = document.querySelector('#auth-status');
 const adminLoginButton = document.querySelector('#admin-login-button');
 let adminToken = '';
+const teachersStorageKey = '9vclass-teachers';
+
+function restoreTeachers() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(teachersStorageKey) || '[]');
+    document.querySelectorAll('[data-teacher-field]').forEach((input, index) => { input.value = saved[index] || ''; });
+  } catch {}
+}
+
+function saveTeachers() {
+  localStorage.setItem(teachersStorageKey, JSON.stringify(Array.from(document.querySelectorAll('[data-teacher-field]'), input => input.value)));
+}
 
 function setScheduleEditing(enabled) {
   document.querySelectorAll('.schedule-entry input').forEach(input => {
@@ -20,7 +32,12 @@ function setTeachersEditing(enabled) {
 
 setScheduleEditing(false);
 setTeachersEditing(false);
+restoreTeachers();
 document.body.dataset.accessMode = 'visitor';
+
+document.querySelectorAll('[data-teacher-field]').forEach(input => input.addEventListener('input', () => {
+  if (document.body.dataset.accessMode === 'admin') saveTeachers();
+}));
 
 adminLoginButton.addEventListener('click', () => {
   authOverlay.hidden = false;

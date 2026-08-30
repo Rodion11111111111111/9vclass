@@ -30,6 +30,11 @@
   font-weight: 900;
 }
 
+.teachers-subjects-header span:nth-child(2) {
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+}
+
 .teachers-subjects-header span + span,
 .teachers-subjects-row span + span { border-left: 1px solid #dbeaf4; }
 .teachers-subjects-row + .teachers-subjects-row { border-top: 1px solid #dbeaf4; }

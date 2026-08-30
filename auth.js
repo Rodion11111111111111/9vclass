@@ -5,6 +5,7 @@ const authPasswordLabel = document.querySelector('#auth-password-label');
 const authSubmit = document.querySelector('#auth-submit');
 const authStatus = document.querySelector('#auth-status');
 const adminLoginButton = document.querySelector('#admin-login-button');
+const authCloseButton = document.querySelector('#auth-close');
 let adminToken = '';
 let teachersSaveTimeout;
 const teachersStorageKey = '9vclass-teachers';
@@ -57,6 +58,11 @@ document.querySelectorAll('[data-teacher-field]').forEach(input => input.addEven
 
 adminLoginButton.addEventListener('click', () => {
   authOverlay.hidden = false;
+  authStatus.textContent = '';
+});
+
+authCloseButton.addEventListener('click', () => {
+  authOverlay.hidden = true;
   authStatus.textContent = '';
 });
 

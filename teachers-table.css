@@ -49,6 +49,7 @@
 .teachers-subjects-row textarea + textarea { border-left: 1px solid #dbeaf4; }
 .teachers-subjects-row textarea:focus { outline: 2px solid #62b9e9; outline-offset: -2px; background: #f6fcff; }
 .teachers-subjects-row textarea:read-only { color: #18364b; cursor: default; opacity: 1; }
+.teachers-subjects-row textarea[data-teacher-field="teacher"] { font-weight: 400; }
 
 @media (max-width: 560px) {
   .teachers-subjects-header { font-size: 14px; }

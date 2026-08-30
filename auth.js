@@ -17,13 +17,13 @@ function resizeTeacherField(field) {
 }
 
 function makeTeacherFieldsMultiline() {
-  document.querySelectorAll('[data-teacher-field="teacher"]').forEach(input => {
+  document.querySelectorAll('[data-teacher-field]').forEach(input => {
     const field = document.createElement('textarea');
-    field.dataset.teacherField = 'teacher';
+    field.dataset.teacherField = input.dataset.teacherField;
     field.placeholder = input.placeholder;
     field.value = input.value;
     field.readOnly = input.readOnly;
-    field.setAttribute('aria-label', input.getAttribute('aria-label') || 'Учитель');
+    field.setAttribute('aria-label', input.getAttribute('aria-label') || input.placeholder);
     field.rows = 1;
     input.replaceWith(field);
   });

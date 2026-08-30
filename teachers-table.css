@@ -25,6 +25,11 @@
   padding: 14px 18px;
 }
 
+.teachers-subjects-header span:first-child {
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+}
+
 .teachers-subjects-header span + span,
 .teachers-subjects-row span + span { border-left: 1px solid #dbeaf4; }
 .teachers-subjects-row + .teachers-subjects-row { border-top: 1px solid #dbeaf4; }

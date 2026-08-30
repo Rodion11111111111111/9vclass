@@ -10,10 +10,29 @@ let adminToken = '';
 let teachersSaveTimeout;
 const teachersStorageKey = '9vclass-teachers';
 
+function resizeTeacherField(field) {
+  if (field.tagName !== 'TEXTAREA') return;
+  field.style.height = 'auto';
+  field.style.height = `${Math.max(48, field.scrollHeight)}px`;
+}
+
+function makeTeacherFieldsMultiline() {
+  document.querySelectorAll('[data-teacher-field="teacher"]').forEach(input => {
+    const field = document.createElement('textarea');
+    field.dataset.teacherField = 'teacher';
+    field.placeholder = input.placeholder;
+    field.value = input.value;
+    field.readOnly = input.readOnly;
+    field.setAttribute('aria-label', input.getAttribute('aria-label') || 'Учитель');
+    field.rows = 1;
+    input.replaceWith(field);
+  });
+}
+
 function restoreTeachers() {
   try {
     const saved = JSON.parse(localStorage.getItem(teachersStorageKey) || '[]');
-    document.querySelectorAll('[data-teacher-field]').forEach((input, index) => { input.value = saved[index] || ''; });
+    document.querySelectorAll('[data-teacher-field]').forEach((input, index) => { input.value = saved[index] || ''; resizeTeacherField(input); });
   } catch {}
 }
 
@@ -30,7 +49,7 @@ async function loadTeachers() {
     if (!response.ok) return;
     const teachers = (await response.json()).teachers;
     if (!Array.isArray(teachers) || !teachers.some(Boolean)) return;
-    document.querySelectorAll('[data-teacher-field]').forEach((input, index) => { input.value = teachers[index] || ''; });
+    document.querySelectorAll('[data-teacher-field]').forEach((input, index) => { input.value = teachers[index] || ''; resizeTeacherField(input); });
     localStorage.setItem(teachersStorageKey, JSON.stringify(teachers));
   } catch {}
 }
@@ -46,6 +65,7 @@ function setTeachersEditing(enabled) {
   document.querySelectorAll('[data-teacher-field]').forEach(input => { input.readOnly = !enabled; });
 }
 
+makeTeacherFieldsMultiline();
 setScheduleEditing(false);
 setTeachersEditing(false);
 restoreTeachers();
@@ -53,6 +73,7 @@ loadTeachers();
 document.body.dataset.accessMode = 'visitor';
 
 document.querySelectorAll('[data-teacher-field]').forEach(input => input.addEventListener('input', () => {
+  resizeTeacherField(input);
   if (document.body.dataset.accessMode === 'admin') saveTeachers();
 }));
 
